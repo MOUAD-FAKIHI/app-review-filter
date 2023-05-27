@@ -45,6 +45,7 @@ export default function AppReviewsScreen() {
   const [filterRating, setFilterRating] = useState('all');
   const [filterVersion, setFilterVersion] = useState('all');
   const [filterCountry, setFilterCountry] = useState('all');
+  const [nbrReviews, setNbrReviews] = useState(0);
   // console.log(filterApps);
   //   console.log(pages);
   //   console.log(versions);
@@ -139,6 +140,7 @@ export default function AppReviewsScreen() {
       if (filterCountry !== 'all')
         data = data.filter((e) => e.countryName === filterCountry);
       setPages(Math.ceil(data.length / 10));
+      setNbrReviews(data.length);
       setReviewData(data.slice((page - 1) * 10, page * 10));
     };
     prepareData();
@@ -162,6 +164,7 @@ export default function AppReviewsScreen() {
             <Form.Select
               onChange={(e) => {
                 setFilterApps(e.target.value);
+                setPage(1);
               }}
             >
               {apps.map((e) => (
@@ -215,7 +218,9 @@ export default function AppReviewsScreen() {
               </Form.Group>
             </div>
             <div>
-              <h6><i class="fas fa-caret-down"></i> Filter by Rating</h6>
+              <h6>
+                <i class="fas fa-caret-down"></i> Filter by Rating
+              </h6>
               <ul className="list-unstyled">
                 {ratings.map((r) => (
                   <li
@@ -228,7 +233,7 @@ export default function AppReviewsScreen() {
                     style={{ cursor: 'pointer' }}
                     onClick={() => setFilterRating(r.rating)}
                   >
-                    <span className='text-nowrap'>
+                    <span className="text-nowrap">
                       <Rating rating={r.rating} />{' '}
                     </span>
                     <span>
@@ -245,7 +250,9 @@ export default function AppReviewsScreen() {
               </ul>
             </div>
             <div>
-              <h6><i class="fas fa-caret-down"></i> Filter by Version</h6>
+              <h6>
+                <i class="fas fa-caret-down"></i> Filter by Version
+              </h6>
               <ul className="list-unstyled">
                 {versions.map((r, index) => (
                   <li
@@ -275,7 +282,9 @@ export default function AppReviewsScreen() {
               </ul>
             </div>
             <div>
-              <h6><i class="fas fa-caret-down"></i> Filter by Country</h6>
+              <h6>
+                <i class="fas fa-caret-down"></i> Filter by Country
+              </h6>
               <ul className="list-unstyled">
                 {countries.map((r, index) => (
                   <li
@@ -304,6 +313,12 @@ export default function AppReviewsScreen() {
           </div>
         </Col>
         <Col className="p-4 position-absolute end-0" xs={8} md={9}>
+          <h6>
+            Viewing{' '}
+            {`${(page - 1) * 10 + 1}-${
+              page * 10 > nbrReviews ? nbrReviews : page * 10
+            } of ${nbrReviews} Reviews`}
+          </h6>
           {reviewData.map((e) => (
             <Card key={e.id} className="mb-2">
               <Card.Body>
@@ -313,7 +328,7 @@ export default function AppReviewsScreen() {
                   </Badge>{' '}
                   &nbsp;&nbsp;&nbsp;
                   {e.reviewHeading}&nbsp;&nbsp;&nbsp;{' '}
-                  <span className='text-nowrap'>
+                  <span className="text-nowrap">
                     <Rating rating={e.rating} />
                   </span>
                 </Card.Title>
