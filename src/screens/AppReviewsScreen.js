@@ -158,7 +158,7 @@ export default function AppReviewsScreen() {
   return (
     <div className="p-3">
       <Row className="p-2 mb-4">
-        <Col xs={4} md={2}>
+        <Col xs={4}>
           <Form.Group>
             <Form.Label>Select products</Form.Label>
             <Form.Select
@@ -175,7 +175,7 @@ export default function AppReviewsScreen() {
             </Form.Select>
           </Form.Group>
         </Col>
-        <Col xs={{ span: 4, offset: 2 }} md={{ span: 2, offset: 6 }}>
+        <Col xs={{ span: 4, offset: 2 }} md={{ span: 2, offset: 4 }}>
           <Form.Group>
             <Form.Label>Sorting</Form.Label>
             <Form.Select
